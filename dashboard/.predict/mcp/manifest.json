@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "sdk_version": "0.23.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "predictit-mcp",
+      "version": "0.1.0",
+      "title": "PredictIT MCP"
+    },
+    "tools": [
+      {
+        "name": "predict_salary",
+        "title": "Predict tech salary",
+        "description": "Estimate a tech salary (EUR/year) from city, experience level, contract type, and technologies. Returns the predicted salary plus market min/median/max, the caller's percentile, top cities, and technology demand shares.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "city": {
+              "type": "string",
+              "minLength": 1,
+              "description": "City name. Known: Paris, Lyon, Bordeaux, Toulouse, Nantes, Remote, Sousse, Tunis."
+            },
+            "experience": {
+              "type": "string",
+              "enum": [
+                "junior",
+                "intermediate",
+                "senior"
+              ],
+              "description": "Experience level."
+            },
+            "contract": {
+              "type": "string",
+              "enum": [
+                "cdi",
+                "freelance",
+                "cdd",
+                "alternance"
+              ],
+              "description": "Contract type."
+            },
+            "technologies": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": "Technologies in the candidate's stack, e.g. ['React','TypeScript','FastAPI']."
+            }
+          },
+          "required": [
+            "city",
+            "experience",
+            "contract",
+            "technologies"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

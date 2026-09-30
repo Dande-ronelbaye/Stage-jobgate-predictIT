@@ -1,0 +1,6 @@
+scrapy
+pandas
+scikit-learn
+fastapi
+uvicorn
+plotly
