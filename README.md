@@ -83,9 +83,6 @@ JWT_SECRET=change_moi
 JWT_ALGORITHM=HS256
 ```
 
-## 📸 Aperçu
-
-_Captures d'écran à ajouter : page Trends & Skill Pairs, graphe de réseau des compétences, tableau de bord d'authentification._
 
 ## 👤 Auteur
 
