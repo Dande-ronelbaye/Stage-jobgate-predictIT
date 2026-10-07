@@ -1,6 +1,6 @@
 # PredictIT
 
-Plateforme d'intelligence du marché de l'emploi IT — collecte, analyse et visualisation des tendances de compétences demandées sur le marché tunisien, développée dans le cadre d'un stage chez JobGate.
+Plateforme d'intelligence du marché de l'emploi IT — collecte, analyse et visualisation des tendances de compétences demandées sur le marché tunisien et français, développée dans le cadre d'un stage chez JobGate.
 
 ## 🎯 Objectif
 
@@ -14,27 +14,12 @@ PredictIT scrape, structure et analyse des offres d'emploi IT afin de faire ress
 - **Documentation d'API intégrée**
 - **Thème clair/sombre** via un système de tokens de thème (remplace les classes Tailwind codées en dur)
 
-## 🏗️ Architecture
-
-```
-predictit/
-├── backend/          # API FastAPI
-│   ├── spiders/      # Spiders Scrapy (Keejob, Jungle, Tanitjobs)
-│   ├── pipeline/      # Traitement et structuration des données
-│   └── auth/          # Authentification JWT
-├── frontend/          # Application React (TypeScript/TSX)
-│   ├── components/
-│   ├── pages/          # dont Trends & Skill Pairs
-│   └── AuthContext.tsx
-└── docker-compose.yml
-```
 
 ### Décisions techniques notables
 
 - Absence de champ date natif dans `JobModel` : l'identifiant chronologique (`chronological id`) sert de proxy temporel, les périodes étant labellisées "Période 1, 2…"
 - Chaque spider isole ses réglages spécifiques (ex. middleware Selenium/Patchright pour Tanitjobs) via `custom_settings` propres au spider, sans jamais modifier `settings.py` globalement — pour ne pas casser les autres spiders
-- Le spider Welcome to the Jungle utilise le nom interne `jungle` (et non `wttj`)
-
+- Le spider Welcome to the Jungle utilise le nom interne `jungle`
 ## 🛠️ Stack technique
 
 | Domaine | Technologies |
@@ -61,9 +46,9 @@ predictit/
 ```bash
 cd api
 python -m venv venv
-source venv/bin/activate  # Windows : venv\Scripts\activate
+source venv/bin/activate  
 pip install -r requirements.txt
-cp .env.example .env      # renseigner les variables (voir ci-dessous)
+cp .env.example .env     
 uvicorn main:app --reload
 ```
 
@@ -78,9 +63,9 @@ npm run dev
 ### Variables d'environnement (`.env`)
 
 ```
-DATABASE_URL=postgresql://user:password@localhost:5432/predictit
-JWT_SECRET=change_moi
-JWT_ALGORITHM=HS256
+DATABASE_URL=
+JWT_SECRET=
+JWT_ALGORITHM=
 ```
 
 
