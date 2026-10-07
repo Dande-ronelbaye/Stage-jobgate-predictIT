@@ -5,8 +5,10 @@ from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 
-DATABASE_URL = "postgresql://postgres:root@localhost:5432/predictit_db"
-
+DATABASE_URL = os.environ.get(
+    "DATABASE_URL",
+    "postgresql://postgres:root@localhost:5432/predictit_db"
+)
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
