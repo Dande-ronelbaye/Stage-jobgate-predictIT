@@ -86,4 +86,4 @@ JWT_ALGORITHM=HS256
 
 ## 👤 Auteur
 
-Développé par Dandé — dans le cadre d'un stage chez JobGate.
+Développé par Dandé Ronelbaye GUIDEINAN — dans le cadre d'un stage chez JobGate.
