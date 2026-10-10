@@ -1,1 +1,6 @@
 scraper/chrome_debug_profile/
+
+__pycache__/
+*.pyc
+jobs.sql
+*~
