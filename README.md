@@ -14,12 +14,25 @@ PredictIT scrape, structure et analyse des offres d'emploi IT afin de faire ress
 - **Documentation d'API intégrée**
 - **Thème clair/sombre** via un système de tokens de thème (remplace les classes Tailwind codées en dur)
 
+## 🏗️ Architecture
+
+```
+PredictIT/
+├── api/                  # Backend FastAPI (authentification JWT, historique, routes d'analyse)
+├── dashboard/            # Frontend React 19 + TanStack Start (Vite, Tailwind)
+├── analytics/            # Modules d'analyse des données
+├── scraper/              # Spiders Scrapy (Keejob, Welcome to the Jungle, Tanitjobs)
+├── docker-compose.yml    # Orchestration : PostgreSQL + API + dashboard
+├── requirements.txt      # Dépendances Python
+└── .env.example          # Variables d'environnement à renseigner
+```
 
 ### Décisions techniques notables
 
 - Absence de champ date natif dans `JobModel` : l'identifiant chronologique (`chronological id`) sert de proxy temporel, les périodes étant labellisées "Période 1, 2…"
 - Chaque spider isole ses réglages spécifiques (ex. middleware Selenium/Patchright pour Tanitjobs) via `custom_settings` propres au spider, sans jamais modifier `settings.py` globalement — pour ne pas casser les autres spiders
 - Le spider Welcome to the Jungle utilise le nom interne `jungle`
+
 ## 🛠️ Stack technique
 
 | Domaine | Technologies |
@@ -27,32 +40,47 @@ PredictIT scrape, structure et analyse des offres d'emploi IT afin de faire ress
 | Backend | Python, FastAPI |
 | Scraping | Scrapy, Patchright/CDP |
 | Data | Pandas, Scikit-learn |
-| Frontend | React, TypeScript (TSX), Tailwind CSS |
+| Frontend | React 19, TanStack Start, TypeScript (TSX), Tailwind CSS |
 | Visualisation | Recharts, D3.js |
 | Base de données | PostgreSQL |
 | Auth | JWT (cookies httpOnly) |
-| Déploiement | Docker |
+| Déploiement | Docker, Docker Compose |
 
-## 🚀 Installation
+## 🐳 Lancer avec Docker
 
-### Prérequis
-- Python 3.10+
-- Node.js 18+
-- PostgreSQL
-- Docker (optionnel, pour un déploiement conteneurisé)
-
-### Backend
+Prérequis : [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
 ```bash
-cd api
-python -m venv venv
-source venv/bin/activate  
+docker compose up -d --build
+```
+
+| Service | Adresse |
+|---|---|
+| Dashboard | http://localhost:5173 |
+| API (Swagger) | http://localhost:8000/docs |
+| PostgreSQL | localhost:5433 |
+
+Arrêter : `docker compose down` (les données de la base sont conservées dans un volume).
+
+## 💻 Installation locale (sans Docker)
+
+### Prérequis
+
+- Python 3.12
+- Node.js 22
+- PostgreSQL
+
+### API
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate          # Linux/macOS : source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env     
+cd api
 uvicorn main:app --reload
 ```
 
-### Frontend
+### Dashboard
 
 ```bash
 cd dashboard
@@ -60,14 +88,14 @@ npm install
 npm run dev
 ```
 
-### Variables d'environnement (`.env`)
+### Variables d'environnement
 
-```
-DATABASE_URL=
-JWT_SECRET=
-JWT_ALGORITHM=
-```
+Voir `.env.example`. Sans configuration, l'API utilise des valeurs de développement local.
 
+| Variable | Rôle |
+|---|---|
+| `DATABASE_URL` | Connexion PostgreSQL |
+| `JWT_SECRET_KEY` | Clé de signature des jetons (à changer impérativement en production) |
 
 ## 👤 Auteur
 
