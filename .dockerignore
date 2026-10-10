@@ -1,0 +1,9 @@
+.venv/
+.git/
+.idea/
+dashboard/
+scraper/
+**/__pycache__/
+*.pyc
+jobs.sql
+.env
